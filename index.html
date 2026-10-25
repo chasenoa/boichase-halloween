@@ -35,5 +35,28 @@ const guys=document.getElementById('guys'),girls=document.getElementById('girls'
 const naira=n=>'₦'+n.toLocaleString('en-NG');
 function updateTotal(){const g=Number(guys.value),f=Number(girls.value);total.textContent=naira(g*30000+f*20000);}
 guys.addEventListener('change',updateTotal);girls.addEventListener('change',updateTotal);
-form.addEventListener('submit',e=>{e.preventDefault();const count=Number(guys.value)+Number(girls.value);if(!count){toast.textContent='Please select at least one ticket before continuing.';toast.classList.add('show');return;}const limit=70;if(count>limit){toast.textContent='Please select fewer tickets.';toast.classList.add('show');return;}toast.textContent='Front-end preview only: your selection is ready, but checkout is not live yet. Once your payment provider account is approved, we will connect secure payment verification, unique QR ticket generation, and instant email delivery here.';toast.classList.add('show');});
-</script></body></html>
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const guysCount = Number(guys.value);
+  const girlsCount = Number(girls.value);
+  const totalTickets = guysCount + girlsCount;
+
+  if (totalTickets < 1) {
+    toast.textContent = 'Please select at least one ticket before continuing.';
+    toast.classList.add('show');
+    return;
+  }
+
+  if (totalTickets > 70) {
+    toast.textContent = 'Please select fewer tickets.';
+    toast.classList.add('show');
+    return;
+  }
+
+  // Send customers to the Selar checkout page.
+  window.location.href =
+    'https://partywithboichase.selar.com/ticketsale';
+});
+
